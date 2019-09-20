@@ -41,11 +41,6 @@ PharoGsReader >> compileEnvironment: arg [
 	"skipped"
 ]
 
-{ #category : 'processing' }
-PharoGsReader >> currentClass: aClassName [
-	"skipped"
-]
-
 { #category : 'initialization' }
 PharoGsReader >> directory: aDirectoryPath [
 	aDirectoryPath asFileReference allFiles
@@ -62,12 +57,12 @@ PharoGsReader >> directory: aDirectoryPath [
 
 { #category : 'processing' }
 PharoGsReader >> doit [
-	"skipped"
+	self error: 'unexpected doit .... only methods expected'
 ]
 
 { #category : 'processing' }
 PharoGsReader >> execute: aString [
-	"skipped"
+	self error: 'unexpected execute: .... only methods expected'
 ]
 
 { #category : 'processing' }
