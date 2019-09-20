@@ -1,5 +1,5 @@
 Class {
-	#name : 'AnalyzeFilein',
+	#name : 'PharoGsReader',
 	#superclass : 'GsFileIn',
 	#instVars : [
 		'fileName',
@@ -34,9 +34,9 @@ Class {
 }
 
 { #category : 'private' }
-AnalyzeFilein class >> _generateGsOld [
+PharoGsReader class >> _generateGsOld [
  "Generate the bootstrap .gs files 
-  by reading the tonel *.st files produce by   AnalyzeFilein class >> export"
+  by reading the tonel *.st files produce by   PharoGsReader class >> export"
  | repositoryRoot gsSrcRoot platformConfigurationAttributes 
   projectSetDefinition projectSetModification specUrl projectDef
   topazFileNameMap visitor loadedProjectInfo rowanHome |
@@ -87,7 +87,7 @@ AnalyzeFilein class >> _generateGsOld [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> adjustSymbolList [
+PharoGsReader class >> adjustSymbolList [
   "Need to commit ; logout ; login   after running this"
   | symList rpt |
   rpt := String new .
@@ -106,12 +106,12 @@ AnalyzeFilein class >> adjustSymbolList [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> analyze [
+PharoGsReader class >> analyze [
   "Loads an instance by analyzing the legacy image directory and
    stores a Rowan representation of the legacy image filein in classVar Project.
    Generates a report of files read in fileinFiles.out, and
    a report of stuff put into Project in generate.out .
-   Use  AnalyzeFilein class >> export to export  Project to  rowan *.st tonel files  .
+   Use  PharoGsReader class >> export to export  Project to  rowan *.st tonel files  .
   "
   | inst imageDir base |
   self initialize .
@@ -132,20 +132,20 @@ AnalyzeFilein class >> analyze [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> export [
+PharoGsReader class >> export [
   Project exportPackages: (RwProjectSetDefinition new"nothing on disk to compare to") .
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> fromServerPath: aPath [
+PharoGsReader class >> fromServerPath: aPath [
   System beginTransaction .
 ^ self fromServerPath: aPath parentClass: nil .
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> fromServerPath: aPath parentClass: pClass [
+PharoGsReader class >> fromServerPath: aPath parentClass: pClass [
   | fileStream res expandedPath |
   expandedPath := GsFile _expandFilename: aPath isClient: false .
   fileStream := FileStreamPortable read: expandedPath type: #serverText . 
@@ -157,7 +157,7 @@ AnalyzeFilein class >> fromServerPath: aPath parentClass: pClass [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> globalsNumClasses [
+PharoGsReader class >> globalsNumClasses [
   | cnt |
   cnt := 0 .
   Globals valuesDo:[:v | v isBehavior ifTrue:[ cnt := cnt + 1 ]].
@@ -166,7 +166,7 @@ AnalyzeFilein class >> globalsNumClasses [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> initialize [
+PharoGsReader class >> initialize [
   | misc |
   BaseClasses ifNil:[ | set |
     set := IdentitySet new .
@@ -217,7 +217,7 @@ AnalyzeFilein class >> initialize [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> methodsInStarCategoriesReport [
+PharoGsReader class >> methodsInStarCategoriesReport [
   | rpt classes |
   rpt := String new . 
   classes := SortedCollection withAll: BaseClasses sortBlock:[ :a :b | a name <= b name ].
@@ -237,13 +237,13 @@ AnalyzeFilein class >> methodsInStarCategoriesReport [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> packageName [
+PharoGsReader class >> packageName [
 ^ PPackage ifNotNil:[ PPackage _isSymbol ifTrue:[ PPackage ] ifFalse:[ PPackage name ]]
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> starCategoriesReport [
+PharoGsReader class >> starCategoriesReport [
   | rpt classes |
   rpt := String new .
   classes := SortedCollection withAll: BaseClasses sortBlock:[ :a :b | a name <= b name ].
@@ -260,19 +260,19 @@ AnalyzeFilein class >> starCategoriesReport [
 ]
 
 { #category : 'private' }
-AnalyzeFilein class >> subclassSels [
+PharoGsReader class >> subclassSels [
   ^ Array withAll:( SortedCollection withAll: SubClassSelectors)
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> _sendIsLegal [
+PharoGsReader >> _sendIsLegal [
   ^ false
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> addPackageNamed: aString [
+PharoGsReader >> addPackageNamed: aString [
   MyPackages at: aString put: IdentitySet new .
   MyActivePackage := IdentitySet new .
   MyPackages at: aString put: MyActivePackage .
@@ -281,21 +281,21 @@ AnalyzeFilein >> addPackageNamed: aString [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> checkIsClass: clsObj [
+PharoGsReader >> checkIsClass: clsObj [
   (clsObj isBehavior and:[ classObj isMeta not]) ifFalse:[ Error signal:'bad class'].
   ^ clsObj 
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> classMethod: aClassName [
+PharoGsReader >> classMethod: aClassName [
   aClassName ifNotNil:[ self setClass: aClassName ].
   self classMethod.
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> compileWarning: aWarning [
+PharoGsReader >> compileWarning: aWarning [
   | msg |
   msg := aWarning asString .
   #( 'not optimized' 
@@ -308,13 +308,13 @@ AnalyzeFilein >> compileWarning: aWarning [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> doCompile: aBlock [
+PharoGsReader >> doCompile: aBlock [
  [ aBlock value ] on: CompileWarning do:[:ex | self compileWarning: ex ].
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> doFileIn_parentClass: pClass [
+PharoGsReader >> doFileIn_parentClass: pClass [
   "analyze the file"
   |  path lastSlash prefix excludeDirs |
   path := fileStream gsfile pathName . 
@@ -361,13 +361,13 @@ AnalyzeFilein >> doFileIn_parentClass: pClass [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> error: aString [
+PharoGsReader >> error: aString [
   Error signal: aString
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> generate [
+PharoGsReader >> generate [
   | rpt |
   Gen := true .
   ClassesDefined := IdentitySet new .
@@ -386,38 +386,38 @@ AnalyzeFilein >> generate [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> lookup: aString [
+PharoGsReader >> lookup: aString [
   ^ (SymList resolveSymbol: aString asSymbol) value
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> method: aClassName [
+PharoGsReader >> method: aClassName [
   aClassName ifNotNil:[ self setClass: aClassName ].
   self method.
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> packageName [
+PharoGsReader >> packageName [
 ^ self class packageName
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> project [
+PharoGsReader >> project [
 ^ Project
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> report [
+PharoGsReader >> report [
 ^ self report: 1
 
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> report: level [
+PharoGsReader >> report: level [
   | rpt indent sz fn |
   rpt := String new .
   fn := fileName .
@@ -482,7 +482,7 @@ AnalyzeFilein >> report: level [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> reportChunk: arr indent: indent level: level [
+PharoGsReader >> reportChunk: arr indent: indent level: level [
  | kind |
  kind := arr at: 1 .
  kind == #doit ifTrue:[
@@ -494,7 +494,7 @@ AnalyzeFilein >> reportChunk: arr indent: indent level: level [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> reportDoit: arr indent: indent level: level [
+PharoGsReader >> reportDoit: arr indent: indent level: level [
  | fName lNum clsName src meth sels lits subclassSel indentStr rpt clsObj rcvr |
  rpt := String new .
  indentStr := String new . indent timesRepeat:[ indentStr add: $  ]. indentStr add: $  .
@@ -588,7 +588,7 @@ AnalyzeFilein >> reportDoit: arr indent: indent level: level [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> reportMethod: arr indent: indent level: level [
+PharoGsReader >> reportMethod: arr indent: indent level: level [
  | fName lNum kind categ clsObj src rwExt rpt meth sel gen |
  kind := arr at: 1 . lNum := arr at: 2 . categ := arr at: 3 .
  clsObj := arr at: 4 . src := arr at: 5 . meth := arr at: 6 .
@@ -639,7 +639,7 @@ AnalyzeFilein >> reportMethod: arr indent: indent level: level [
 ]
 
 { #category : 'private' }
-AnalyzeFilein >> rwExtensionForClass: clsObj report: rpt [ 
+PharoGsReader >> rwExtensionForClass: clsObj report: rpt [ 
  | nam |
  clsObj ifNil:[ Error signal:'clsObj arg is nil'].
  nam := clsObj name .
