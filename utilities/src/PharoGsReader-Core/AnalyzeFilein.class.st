@@ -30,7 +30,7 @@ Class {
 		'SubClassSelectors',
 		'SymList'
 	],
-	#category : nil
+	#category : 'PharoGsReader-Core'
 }
 
 { #category : 'private' }

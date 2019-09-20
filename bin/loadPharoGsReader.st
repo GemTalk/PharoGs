@@ -33,7 +33,8 @@ WS_LoadPharoGsReader >> main [
 	adopt == true
 		ifTrue: [ 
 			Rowan packageTools adopt
-				adoptClassNamed: 'AnalyzeFilein'  intoPackageNamed:  'PharoGsReader-Core' ].
+				adoptClassNamed: 'AnalyzeFilein'  intoPackageNamed:  'PharoGsReader-Core'.
+			(Rowan globalNamed: 'AnalyzeFilein') category: 'PharoGsReader-Core' ].
 	^ self commit
 ]
 
