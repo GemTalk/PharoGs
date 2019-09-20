@@ -62,9 +62,7 @@ PharoGsReader >> directory: aDirectoryPath [
 
 { #category : 'processing' }
 PharoGsReader >> doit [
-
-	self execute: self nextChunk.
-
+	"skipped"
 ]
 
 { #category : 'processing' }
