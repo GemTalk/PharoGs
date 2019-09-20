@@ -1,0 +1,17 @@
+RwComponentSpecification {
+	#specName : 'PharoGsReader',
+	#comment : 'standard load spec',
+	#version : '0.3.0',
+	#projectUrl : 'https://github.com/GemTalk/PharoGs',
+	#configsPath : 'utilities/components',
+	#specsPath : 'utilities/specs',
+	#repoPath : 'utilities/src',
+	#defaultConfigurationNames : [
+		'Core'
+	],
+	#defaultGroupNames : [
+		'core'
+	],
+	#projectsPath : 'utilities/projects',
+	#defaultComponentName : 'Core'
+}
