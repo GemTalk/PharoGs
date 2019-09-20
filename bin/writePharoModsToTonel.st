@@ -1,8 +1,8 @@
 #!/usr/local/bin/smalltalk/gemstone/st_launcher
 "
 Script to convert .gs files in PharoMods directory into tonel-based packages to
-make it possible for Pharo engineers to analyze and understand the changes made
-by James to get the Seaside application running.
+	make it possible for Pharo engineers to analyze and understand the changes 
+	made by James to get the Seaside application running.
 
 	--install
 		Install the GsFileIn subclass that reads .gs format files and produces a 
