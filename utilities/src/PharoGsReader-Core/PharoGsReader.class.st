@@ -6,7 +6,8 @@ Class {
 	#superclass : 'GsFileIn',
 	#instVars : [
 		'project',
-		'currentPackage'
+		'currentPackage',
+		'currentFileReference'
 	],
 	#category : 'PharoGsReader-Core'
 }
@@ -55,7 +56,7 @@ PharoGsReader >> directory: aDirectoryPath forProjectSpecUrl: projectSpecUrl inP
 	project := RwComponentProjectDefinition newForUrl: projectSpecUrl.
 	currentPackage := project
 		addPackageNamed: packageName
-		toComponentNamed: project projectName
+		toComponentNamed: project name
 		withConditions: {'gemstone'}
 		andGroupName: 'core'
 		gemstoneDefaultSymbolDictionaryForUser: 'SystemUser' -> 'UserGlobals'.
@@ -63,13 +64,13 @@ PharoGsReader >> directory: aDirectoryPath forProjectSpecUrl: projectSpecUrl inP
 		do: [ :fileReference | 
 			fileReference extension = 'gs'
 				ifTrue: [ 
+					currentFileReference := fileReference.
 					fileReference
 						readStreamDo: [ :aFileStream | 
 							| stream |
-							stream := ZnBufferedReadStream
-								on: fileStream self
-								fileStream: aFileStream.	"hack for now"
-							self doFilein ] ] ].
+							stream := ZnBufferedReadStream on: aFileStream.	"hack for now"
+							self fileStream: stream.
+							self doFileIn ] ] ].
 	project export
 ]
 

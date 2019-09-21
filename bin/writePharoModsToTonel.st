@@ -14,24 +14,24 @@ Class {
 
 { #category : 'accessing' }
 WS_ConvertPharoMods >> projectSpecUrl [
-	^ 'file:', (self dirName parent / 'utilities' / 'specs' / self projectName , 'ston' ) pathString
+	^ 'file:', (self dirname parent / 'utilities' / 'specs' / self projectname , 'ston' ) pathString
 ]
 
 { #category : 'accessing' }
-WS_ConvertPharoMods >> projectName [
+WS_ConvertPharoMods >> projectname [
 	^ 'PharoMods'
 ]
 
 { #category : 'accessing' }
-WS_ConvertPharoMods >> packageName [
-	^ self projectName, '-Core'
+WS_ConvertPharoMods >> packagename [
+	^ self projectname, '-Core'
 ]
 
 { #category : 'main' }
 WS_ConvertPharoMods >> main [
-	PharoGsReader 
-		readFilesIn: self workingDirectory
+	(self globalNamed: 'PharoGsReader') 
+		readFilesIn: self dirname parent / 'ESUG_2019' / 'PharoMods'
 		forProjectSpecUrl: self projectSpecUrl
-		inPackageNamed: self packageName.
+		inPackageNamed: self packagename.
 	^ true
 ]
