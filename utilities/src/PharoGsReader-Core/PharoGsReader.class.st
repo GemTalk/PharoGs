@@ -53,7 +53,12 @@ PharoGsReader >> currentPackage [
 { #category : 'initialization' }
 PharoGsReader >> directory: aDirectoryPath forProjectSpecUrl: projectSpecUrl inPackageNamed: packageName [
 	project := RwComponentProjectDefinition newForUrl: projectSpecUrl.
-	currentPackage := project addPackageNamed: packageName.
+	currentPackage := project
+		addPackageNamed: packageName
+		toComponentNamed: project projectName
+		withConditions: {'gemstone'}
+		andGroupName: 'core'
+		gemstoneDefaultSymbolDictionaryForUser: 'SystemUser' -> 'UserGlobals'.
 	aDirectoryPath asFileReference allFiles
 		do: [ :fileReference | 
 			fileReference extension = 'gs'
