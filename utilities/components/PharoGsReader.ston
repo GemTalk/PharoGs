@@ -1,0 +1,26 @@
+RwComponentLoadConfiguration {
+	#name : 'PharoGsReader',
+	#comment : 'Component used to load the entire systems',
+	#version : '0.1.0',
+	#conditionalPackages : {
+		[
+			'gemstone'
+		] : {
+			'core' : {
+				#packageNames : [
+					'PharoGsReader-Core'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#defaultSymbolDictName : 'UserGlobals'
+			}
+		}
+	},
+	#definedGroupNames : {
+		'core' : [ ]
+	}
+}

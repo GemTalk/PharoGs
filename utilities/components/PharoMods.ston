@@ -1,5 +1,5 @@
 RwComponentLoadConfiguration {
-	#name : 'Core',
+	#name : 'PharoMods',
 	#comment : 'Component used to load the entire systems',
 	#version : '0.1.0',
 	#conditionalPackages : {
@@ -8,7 +8,6 @@ RwComponentLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
-					'PharoGsReader-Core'
 				]
 			}
 		}

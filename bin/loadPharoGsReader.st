@@ -4,7 +4,8 @@ Load the PharoGsReader project into the image.
 
 	--adopt
 		adopt the AnalyzeFilein class that has been previously loaded via topaz 
-			filein
+			filein ... Only needed in the very beginning and is more of an example
+			of what I did than needed for normal loading.
 "
 Class {
 	#name : 'WS_LoadPharoGsReader',

@@ -4,17 +4,21 @@ I read .gs files and convert the methods into Rowan class extension methods ... 
 Class {
 	#name : 'PharoGsReader',
 	#superclass : 'GsFileIn',
+	#instVars : [
+		'project',
+		'currentPackage'
+	],
 	#category : 'PharoGsReader-Core'
 }
 
 { #category : 'instance creation' }
-PharoGsReader class >> readFilesIn: aDirectoryPath [
-
+PharoGsReader class >> readFilesIn: aDirectoryPath forProjectSpecUrl: projectSpecUrl inPackageNamed: packageName [
 	"read all of the .gs files in aDirectory and accumulate the extension methods in each .gs file into one Rowan package"
 
-	^self new 
-		directory: aDirectoryPath;
-		setSession: nil;
+	^ self new
+		directory: aDirectoryPath
+			forProjectSpecUrl: projectSpecUrl
+			inPackageNamed: packageName;
 		yourself
 ]
 
@@ -41,8 +45,15 @@ PharoGsReader >> compileEnvironment: arg [
 	"skipped"
 ]
 
+{ #category : 'accessing' }
+PharoGsReader >> currentPackage [
+	^ currentPackage
+]
+
 { #category : 'initialization' }
-PharoGsReader >> directory: aDirectoryPath [
+PharoGsReader >> directory: aDirectoryPath forProjectSpecUrl: projectSpecUrl inPackageNamed: packageName [
+	project := RwComponentProjectDefinition newForUrl: projectSpecUrl.
+	currentPackage := project addPackageNamed: packageName.
 	aDirectoryPath asFileReference allFiles
 		do: [ :fileReference | 
 			fileReference extension = 'gs'
@@ -50,9 +61,11 @@ PharoGsReader >> directory: aDirectoryPath [
 					fileReference
 						readStreamDo: [ :aFileStream | 
 							| stream |
-							stream := ZnBufferedReadStream on: fileStream	"hack for now"
-							self fileStream: aFileStream.
-							self doFilein] ] ]
+							stream := ZnBufferedReadStream
+								on: fileStream self
+								fileStream: aFileStream.	"hack for now"
+							self doFilein ] ] ].
+	project export
 ]
 
 { #category : 'processing' }
@@ -71,6 +84,11 @@ PharoGsReader >> method [
 	currentClass isNil ifTrue: [self error: 'current class not defined'].
 	"self compileMethodIn: currentClass."
 self halt
+]
+
+{ #category : 'accessing' }
+PharoGsReader >> project [
+	^ project
 ]
 
 { #category : 'processing' }
