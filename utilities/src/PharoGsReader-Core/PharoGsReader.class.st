@@ -30,10 +30,13 @@ PharoGsReader >> abortTransaction [
 
 { #category : 'processing' }
 PharoGsReader >> classMethod [
-
-	currentClass isNil ifTrue: [self error: 'current class not defined'].
-	"self compileMethodIn: currentClass , ' class'."
-self halt.
+	| classExtension |
+	currentClass isNil
+		ifTrue: [ self error: 'current class not defined' ].
+	classExtension := self currentPackage
+		classExtensionDefinitionNamed: self currentClass
+		ifAbsent: [ self currentPackage addClassExtensionNamed: self currentClass ].
+	classExtension addClassMethod: self nextChunk protocol: category
 ]
 
 { #category : 'processing' }
@@ -86,10 +89,13 @@ PharoGsReader >> execute: aString [
 
 { #category : 'processing' }
 PharoGsReader >> method [
-
-	currentClass isNil ifTrue: [self error: 'current class not defined'].
-	"self compileMethodIn: currentClass."
-self halt
+	| classExtension |
+	currentClass isNil
+		ifTrue: [ self error: 'current class not defined' ].
+	classExtension := self currentPackage
+		classExtensionDefinitionNamed: self currentClass
+		ifAbsent: [ self currentPackage addClassExtensionNamed: self currentClass ].
+	classExtension addInstanceMethod: self nextChunk protocol: category
 ]
 
 { #category : 'accessing' }
