@@ -232,10 +232,8 @@ highBitOfMagnitude
 	"Answer the index of the high order bit of the magnitude of the  
 	receiver, or zero if the receiver is zero."
 
-	| words |
-	self == 0 ifTrue: [^0].
-	words := self @env0:digitLength.
-	^ (self _digitAt: words) highBit + (32 * (words - 1))
+	<primitive: 853>
+	^self @env0:highBit
 %
 
 category: 'printing'

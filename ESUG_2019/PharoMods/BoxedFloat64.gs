@@ -187,16 +187,6 @@ sin
     ^self @env0:_mathPrim: 2
 %
 
-category: 'math functions'
-method: BoxedFloat64
-sin 
-	"Answer the sine of the receiver taken as an angle in radians. 
-	 Optional. See Object documentation whatIsAPrimitive." 
-
-    <PharoGs>
-    ^self @env0:_mathPrim: 2
-%
-
 category: 'accessing'
 method: BoxedFloat64
 size 

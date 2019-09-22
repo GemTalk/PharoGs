@@ -878,15 +878,6 @@ method
 
 category: 'accessing'
 method: CompiledMethod
-methodClass
-	<PharoGsError>
-	self _gsError "
-	""answer the class that I am installed in""
-	^self classBinding value"
-%
-
-category: 'accessing'
-method: CompiledMethod
 methodClass: aClass
 	<PharoGsError>
 	self _gsError "
@@ -931,52 +922,6 @@ numberOfReservedLiterals
 	<PharoGsError>
 	self _gsError "
 	^ 2"
-%
-
-category: 'accessing'
-method: CompiledMethod
-origin
-	<PharoGsError>
-	self _gsError "
-	^ self methodClass findOriginClassOf: self"
-%
-
-category: 'accessing'
-method: CompiledMethod
-originMethod
-	<PharoGsError>
-	self _gsError "
-	^ self methodClass findOriginMethodOf: self.
-	
-"
-%
-
-category: '*rpackage-core'
-method: CompiledMethod
-package
-	<PharoGsError>
-	self _gsError "
-	^ self packageFromOrganizer: RPackage organizer"
-%
-
-category: '*rpackage-core'
-method: CompiledMethod
-packageFromOrganizer: anRPackageOrganizer
-	<PharoGsError>
-	self _gsError "
-	| originSelector |
-	""This method returns the package this method belongs to.  
-	It takes into account classes and traits.  
-	If the method is in no package, returns nil by now""
-	self flag: 'TODO: use anRPackageOrganizer, or better delegate to anRPackageOrganizer'.
-	originSelector := self originMethod selector.
-	
-	^self origin packages 
-		detect: [ :each | 
-			self origin isMeta
-				ifFalse: [ each includesSelector: originSelector ofClassName: self origin instanceSide originalName]
-				ifTrue: [ each includesSelector: originSelector ofMetaclassName: self origin instanceSide originalName]] 
-		ifNone: [ nil ]"
 %
 
 category: '*AST-Core'
@@ -1042,17 +987,6 @@ pragmaAt: aKey
 	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
 		ifTrue: [propertiesOrSelector at: aKey ifAbsent: [nil]]
 		ifFalse: [nil]"
-%
-
-category: 'accessing-pragmas & properties'
-method: CompiledMethod
-pragmas
-	<PharoGsError>
-	self _gsError "
-	| selectorOrProperties |
-	^(selectorOrProperties := self penultimateLiteral) isMethodProperties
-		ifTrue: [selectorOrProperties pragmas]
-		ifFalse: [#()]"
 %
 
 category: 'debugger support'
@@ -1456,20 +1390,6 @@ savedTemps
 	<PharoGsError>
 	self _gsError "
 	^self propertyAt: #savedTemps ifAbsent: nil"
-%
-
-category: 'accessing'
-method: CompiledMethod
-selector
-	<PharoGsError>
-	self _gsError "
-	""Answer a method's selector.  This is either the penultimate literal,
-	 or, if the method has any properties or pragmas, the selector of
-	 the MethodProperties stored in the penultimate literal.""
-	| penultimateLiteral | 
-	^(penultimateLiteral := self penultimateLiteral) isMethodProperties
-		ifTrue: [penultimateLiteral selector]
-		ifFalse: [penultimateLiteral]"
 %
 
 category: 'accessing'

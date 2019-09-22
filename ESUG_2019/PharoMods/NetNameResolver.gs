@@ -56,14 +56,6 @@ localHostName
 	^GsSocket @env0:getLocalHostName
 %
 
-category: 'lookups'
-classmethod: NetNameResolver
-localHostName
-
-	<PharoGs>
-	^GsSocket @env0:getLocalHostName
-%
-
 category: 'primitives'
 classmethod: NetNameResolver
 primAbortLookup 

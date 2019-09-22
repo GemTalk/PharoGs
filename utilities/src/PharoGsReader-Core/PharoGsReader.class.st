@@ -79,7 +79,8 @@ PharoGsReader >> directory: aDirectoryPath forProjectSpecUrl: projectSpecUrl inP
 
 { #category : 'processing' }
 PharoGsReader >> doit [
-	self error: 'unexpected doit .... only methods expected'
+	self nextChunk.	"read the doit and drop on floor .. for now"
+	GsFile stderr nextPutAll: 'skipped doit in ', currentFileReference pathString; lf
 ]
 
 { #category : 'processing' }

@@ -1,6 +1,6 @@
 RwComponentLoadConfiguration {
 	#name : 'PharoMods',
-	#comment : 'Component used to load the entire systems',
+	#comment : '',
 	#version : '0.1.0',
 	#conditionalPackages : {
 		[
@@ -8,6 +8,7 @@ RwComponentLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
+					'PharoMods-Core'
 				]
 			}
 		}
@@ -15,11 +16,12 @@ RwComponentLoadConfiguration {
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
 			'SystemUser' : {
-				#defaultSymbolDictName : 'UserGlobals'
+				#packageNameToPlatformPropertiesMap : {
+					'PharoMods-Core' : {
+						'symbolDictName' : 'UserGlobals'
+					}
+				}
 			}
 		}
-	},
-	#definedGroupNames : {
-		'core' : [ ]
 	}
 }
